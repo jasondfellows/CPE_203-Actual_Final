@@ -22,11 +22,13 @@ public final class VirtualWorld extends PApplet
     public static final int WORLD_COLS = 25;
     public static final int WORLD_ROWS = 18;
 
-    public static final String IMAGE_LIST_FILE_NAME = "C:/Users/jason/IdeaProjects/CPE 203/Projects/Project_4/imagelist";
+//    public static final String IMAGE_LIST_FILE_NAME = "C:/Users/jason/IdeaProjects/CPE 203/Projects/Project_4/imagelist";
+public static final String IMAGE_LIST_FILE_NAME = "imagelist";
     public static final String DEFAULT_IMAGE_NAME = "background_default";
     public static final int DEFAULT_IMAGE_COLOR = 0x808080;
 
-    public static String LOAD_FILE_NAME = "C:/Users/jason/IdeaProjects/CPE 203/Projects/Project_4/world.sav";
+//    public static String LOAD_FILE_NAME = "C:/Users/jason/IdeaProjects/CPE 203/Projects/Project_4/world.sav";
+public static String LOAD_FILE_NAME = "world.sav";
 
     public static final String FAST_FLAG = "-fast";
     public static final String FASTER_FLAG = "-faster";
