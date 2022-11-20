@@ -26,6 +26,8 @@ public class snowyTree extends TransformablePlant{
             world.addEntity(world, st);
             this.scheduleActions(st, scheduler, world, imageStore);
 
+            //System.out.println("Hello");
+
             return true;
     }
 

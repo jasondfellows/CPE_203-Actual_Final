@@ -61,7 +61,9 @@ public final class Functions
     public static final int DUDE_ID = 1;
     public static final int DUDE_COL = 2;
     public static final int DUDE_ROW = 3;
-    public static final int DUDE_LIMIT = 4;
+//    public static final int DUDE_LIMIT = 4;
+    public static final int DUDE_LIMIT = 10; // change to 10 for player
+
     public static final int DUDE_ACTION_PERIOD = 5;
     public static final int DUDE_ANIMATION_PERIOD = 6;
     public static final int PLAYER_ANIMATION_PERIOD = 4;

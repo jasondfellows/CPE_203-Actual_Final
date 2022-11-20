@@ -76,6 +76,15 @@ public class Player extends Transformable{
             }
             if (world.getOccupancyCell(world, testPos) != null && world.getOccupancyCell(world, testPos).getClass() == snowyTree.class){
                 ((snowyTree)(world.getOccupancyCell(world, testPos))).transform(world.getOccupancyCell(world, testPos), world, scheduler, imagestore);
+
+                if (this.getResourceCount() < this.getResourceLimit())
+                {
+                    int x = this.getResourceCount();
+                    x++;
+                    this.setResourceCount(x);
+                }
+                System.out.println("Player SNOW count: " + this.getResourceCount() + " out of " + this.getResourceLimit());
+
             }
         }
     }
