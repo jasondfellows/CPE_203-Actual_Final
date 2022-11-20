@@ -8,7 +8,7 @@ import processing.core.*;
 
 public final class VirtualWorld extends PApplet
 {
-    public static final int TIMER_ACTION_PERIOD = 100;
+    public static final int TIMER_ACTION_PERIOD = 100;//tdest
 
     public static final int VIEW_WIDTH = 800;
     public static final int VIEW_HEIGHT = 576;
