@@ -267,6 +267,22 @@ public final class WorldModel
         return properties.length == Functions.OBSTACLE_NUM_PROPERTIES;
     }
 
+    public static boolean parseYETI(
+            String[] properties, WorldModel world, ImageStore imageStore)
+    {
+        if (properties.length == Functions.YETI_NUM_PROPERTIES) {
+            Point pt = new Point(Integer.parseInt(properties[Functions.YETI_COL]),
+                    Integer.parseInt(properties[Functions.YETI_ROW]));
+
+            House entity = new House(properties[Functions.YETI_ID], pt,
+                    imageStore.getImageList(imageStore, Functions.YETI_1KEY), 0);
+            world.tryAddEntity(world, entity);
+            System.out.println("add yeti");
+        }
+
+        return properties.length == Functions.HOUSE_NUM_PROPERTIES;
+    }
+
     public static boolean withinBounds(WorldModel world, Point pos) {
         return pos.y >= 0 && pos.y < world.numRows && pos.x >= 0
                 && pos.x < world.numCols;
@@ -294,6 +310,8 @@ public final class WorldModel
                     return parseTree(properties, world, imageStore);
                 case Functions.SAPLING_KEY:
                     return parseSapling(properties, world, imageStore);
+                case Functions.YETI_1KEY:
+                    return parseYETI(properties, world, imageStore);
             }
         }
 
