@@ -87,6 +87,7 @@ public static String LOAD_FILE_NAME = "world.sav";
     // Be sure to refactor this method as appropriate
     public void mousePressed() {
         Point pressed = mouseToPoint(mouseX, mouseY);
+
         System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
 
         Optional<Entity> entityOptional = world.getOccupant(world, pressed);
@@ -96,6 +97,33 @@ public static String LOAD_FILE_NAME = "world.sav";
             System.out.println(entity.getId() + ": " + entity.toString() + " : " + entity.getHealth());
         }
 
+        if(onYeti(pressed) == true && onYeti(player.getPosition()) == true)
+            {
+                if (player.getResourceCount() <= player.getResourceLimit())
+                {
+                    System.out.println("Player is on Yeti AND Yeti has been clicked AND Player has enough snow");
+                    //um set to above resourceLimit so this if statement will never be entered again. Otherwise it might be even after Yeti is removed.
+                    player.setResourceCount(player.getResourceLimit() * 10);
+                    System.out.println("[Also, Player has 10 SNOW! code to get rid of Yeti and bring in lights]");
+                    world.removeEntityAt(world, new Point(9, 5));
+                }
+
+                //QUESTION: At (9,5) there is a house apparently?? How do we get rid of?
+
+            }
+
+    }
+    public boolean onYeti(Point p)
+    {
+        if (p.x <15 && p.x > 8 && p.y < 11 && p.y > 5)
+        {
+            if (!p.equals(new Point (9,6)) && !p.equals(new Point (9,7)) && !p.equals(new Point (9,8))
+                    && (!p.equals(new Point (14,6)) && !p.equals(new Point (14,7)) && !p.equals(new Point (14,8)) ))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 

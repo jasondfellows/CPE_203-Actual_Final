@@ -275,9 +275,10 @@ public final class WorldModel
             Point pt = new Point(Integer.parseInt(properties[Functions.YETI_COL]),
                     Integer.parseInt(properties[Functions.YETI_ROW]));
 
-            House entity = new House(properties[Functions.YETI_ID], pt,
+            House yeti = new House(properties[Functions.YETI_ID], pt,
                     imageStore.getImageList(imageStore, Functions.YETI_1KEY), 0);
-            world.tryAddEntity(world, entity);
+
+            world.tryAddEntity(world, yeti);
             System.out.println("add yeti");
         }
 
