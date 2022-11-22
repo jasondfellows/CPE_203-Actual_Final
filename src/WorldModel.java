@@ -270,6 +270,7 @@ public final class WorldModel
     public static boolean parseYETI(
             String[] properties, WorldModel world, ImageStore imageStore)
     {
+        System.out.println("yeti");
         if (properties.length == Functions.YETI_NUM_PROPERTIES) {
             Point pt = new Point(Integer.parseInt(properties[Functions.YETI_COL]),
                     Integer.parseInt(properties[Functions.YETI_ROW]));
