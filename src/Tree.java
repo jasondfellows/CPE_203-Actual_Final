@@ -21,7 +21,7 @@ public class Tree extends TransformablePlant{
             snowyTree st = new snowyTree("snowytree_" + t.getId(),
                     t.getPosition(), imageStore.getImageList(imageStore, Functions.SNOWY_TREE_KEY), Functions.getNumFromRange(Functions.TREE_ANIMATION_MAX, Functions.TREE_ANIMATION_MIN),
                     Functions.getNumFromRange(Functions.TREE_ACTION_MAX, Functions.TREE_ACTION_MIN),
-                    Functions.getNumFromRange(Functions.TREE_HEALTH_MAX, Functions.TREE_HEALTH_MIN)
+                    0
             );
 
             world.removeEntity(world, t);

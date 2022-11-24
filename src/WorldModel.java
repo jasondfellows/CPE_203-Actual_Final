@@ -14,6 +14,8 @@ public final class WorldModel
     private Background background[][];
     private Entity occupancy[][];
     public Set<Entity> entities;
+    public int numInHouse;
+    public LinkedList<UnlitTree> UnlitTrees;
 
     public WorldModel(int numRows, int numCols, Background defaultBackground) {
         this.numRows = numRows;
@@ -21,6 +23,8 @@ public final class WorldModel
         this.background = new Background[numRows][numCols];
         this.occupancy = new Entity[numRows][numCols];
         this.entities = new HashSet<>();
+        this.numInHouse = 0;
+        this.UnlitTrees = new LinkedList<>();
 
         for (int row = 0; row < numRows; row++) {
             Arrays.fill(this.background[row], defaultBackground);
@@ -79,6 +83,55 @@ public final class WorldModel
 
         return this.nearestEntity(ofType, pos);
     }
+    public Point findNearestBackground(
+            WorldModel world, Point pos) {
+        List<Point> bgs = new LinkedList<>();
+        int x = 0;
+        while (x < 24){
+            int y = 0;
+            while (y < 17) {
+                if (world.background[y][x].getId().equals("litsnow")) {
+                    bgs.add(new Point(x, y));
+                }
+                y ++;
+            }
+            x ++;
+        }
+        return this.findClosestTile(bgs, pos);
+    }
+    public Point findClosestTile(List<Point> points, Point pos){
+        double minDist = 1000;
+        Point minPt = null;
+        for (Point p : points){
+            if (Point.distance(p, pos) < minDist){
+                minDist = Point.distance(p, pos);
+                minPt = p;
+            }
+        }
+        return minPt;
+    }
+    public Optional<Entity> nearestTile(
+            List<Entity> entities, Point pos)
+    {
+        if (entities.isEmpty()) {
+            return Optional.empty();
+        }
+        else {
+            Entity nearest = entities.get(0);
+            int nearestDistance = pos.distanceSquared(nearest.getPosition(), pos);
+
+            for (Entity other : entities) {
+                int otherDistance = pos.distanceSquared(other.getPosition(), pos);
+
+                if (otherDistance < nearestDistance) {
+                    nearest = other;
+                    nearestDistance = otherDistance;
+                }
+            }
+
+            return Optional.of(nearest);
+        }
+    }
     public Optional<Entity> nearestEntity(
             List<Entity> entities, Point pos)
     {
@@ -104,10 +157,14 @@ public final class WorldModel
 
     public void addEntity(WorldModel world, Entity entity) {
         if (this.withinBounds(world, entity.getPosition())) {
+            if (entity.getClass() == UnlitTree.class){
+                this.UnlitTrees.add(((UnlitTree)entity));
+            }
             world.setOccupancyCell(world, entity.getPosition(), entity);
             world.entities.add(entity);
         }
     }
+
 
     public void removeEntityAt(WorldModel world, Point pos) {
         if (world.withinBounds(world, pos) && world.getOccupancyCell(world, pos) != null) {
@@ -201,18 +258,17 @@ public final class WorldModel
         return entity;
     }
     public static boolean parseDude(
-            String[] properties, WorldModel world, ImageStore imageStore)
+            String[] properties, WorldModel world, ImageStore imageStore, Point pt, EventScheduler scheduler)
     {
-        if (properties.length == Functions.DUDE_NUM_PROPERTIES) {
-            Point pt = new Point(Integer.parseInt(properties[Functions.DUDE_COL]),
-                    Integer.parseInt(properties[Functions.DUDE_ROW]));
-            DudeNotFull entity = new DudeNotFull(properties[Functions.DUDE_ID],
-                    pt, imageStore.getImageList(imageStore, Functions.DUDE_KEY), Integer.parseInt(properties[Functions.DUDE_ANIMATION_PERIOD]),
-                    Integer.parseInt(properties[Functions.DUDE_ACTION_PERIOD]), 0,
-                    Integer.parseInt(properties[Functions.DUDE_LIMIT]), 0
-                    );
-            world.tryAddEntity(world, entity);
-        }
+        DudeNotFull entity = new DudeNotFull("dude",
+                pt, imageStore.getImageList(imageStore, Functions.DUDE_KEY), Functions.DUDE_ANIMATION_PERIOD,
+                Functions.DUDE_ACTION_PERIOD, 1,
+                Functions.DUDE_LIMIT, 0
+        );
+        world.tryAddEntity(world, entity);
+        scheduler.scheduleEvent(scheduler, entity, new Activity(entity, world, imageStore),
+                entity.getActionPeriod());
+
 
         return properties.length == Functions.DUDE_NUM_PROPERTIES;
     }
@@ -244,8 +300,8 @@ public final class WorldModel
                     pt, imageStore.getImageList(imageStore, Functions.SNOWY_TREE_KEY),
                     Integer.parseInt(properties[Functions.TREE_ANIMATION_PERIOD]),
                     Integer.parseInt(properties[Functions.TREE_ACTION_PERIOD]),
-                    Integer.parseInt(properties[Functions.TREE_HEALTH])
-                    );
+                    0
+            );
             world.tryAddEntity(world, entity);
         }
 
@@ -307,7 +363,7 @@ public final class WorldModel
                 case Functions.FAIRY_KEY:
                     return parseFairy(properties, world, imageStore);
                 case Functions.HOUSE_1KEY, Functions.HOUSE_2KEY, Functions.HOUSE_3KEY, Functions.HOUSE_4KEY, Functions.HOUSE_5KEY, Functions.HOUSE_6KEY, Functions.HOUSE_7KEY, Functions.HOUSE_8KEY, Functions.HOUSE_9KEY, Functions.HOUSE_10KEY, Functions.HOUSE_11KEY, Functions.HOUSE_12KEY:
-                    return parseHouse(properties, world, imageStore, key);
+                    return true;
                 case Functions.SNOWY_TREE_KEY:
                     return parseTree(properties, world, imageStore);
                 case Functions.SAPLING_KEY:
@@ -344,7 +400,78 @@ public final class WorldModel
         }
     }
     public boolean isOccupied(WorldModel world, Point pos) {
-        return this.withinBounds(world, pos) && world.getOccupancyCell(world, pos) != null;
+        if (this.withinBounds(world, pos)) {
+            if (world.getBackgroundCell(world, pos).getId().startsWith("house") || (world.getBackgroundCell(world, pos).getId().startsWith("unliti"))){
+                return true;
+            }
+            else if (world.getOccupancyCell(world, pos) != null){
+                return true;
+            }
+        }
+        return false;
     }
+    public void worldEvent(WorldModel world, EventScheduler scheduler, ImageStore images, Point pos){
+        int i = 1;
+        setBackgroundCell(world, pos, new Background("litsnow",images.getImageList(images, "litsnow")));
+        while (i < 5){
+            setBackgroundCell(world, new Point(pos.x, pos.y - i), new Background("litsnow",images.getImageList(images, "litsnow")));
+            setBackgroundCell(world, new Point(pos.x, pos.y + i), new Background("litsnow",images.getImageList(images, "litsnow")));
+            setBackgroundCell(world, new Point(pos.x - i, pos.y), new Background("litsnow",images.getImageList(images, "litsnow")));
+            setBackgroundCell(world, new Point(pos.x + i, pos.y), new Background("litsnow",images.getImageList(images, "litsnow")));
+            setBackgroundCell(world, new Point(pos.x + i, pos.y -i), new Background("litsnow",images.getImageList(images, "litsnow")));
+            setBackgroundCell(world, new Point(pos.x + i, pos.y + i), new Background("litsnow",images.getImageList(images, "litsnow")));
+            setBackgroundCell(world, new Point(pos.x - i, pos.y - i), new Background("litsnow",images.getImageList(images, "litsnow")));
+            setBackgroundCell(world, new Point(pos.x - i, pos.y + i), new Background("litsnow",images.getImageList(images, "litsnow")));
+            i += 1;
+        }
+    }
+    public void transformIgloo(WorldModel world, ImageStore images){
+        setBackgroundCell(world, new Point(0, 15), new Background("unlitigloo1",images.getImageList(images, "unlitigloo1")));
+        setBackgroundCell(world, new Point(1, 15), new Background("unlitigloo2",images.getImageList(images, "unlitigloo2")));
+        setBackgroundCell(world, new Point(2, 15), new Background("unlitigloo3",images.getImageList(images, "unlitigloo3")));
+        setBackgroundCell(world, new Point(3, 15), new Background("unlitigloo4",images.getImageList(images, "unlitigloo4")));
+        setBackgroundCell(world, new Point(0, 16), new Background("unlitigloo5",images.getImageList(images, "unlitigloo5")));
+        setBackgroundCell(world, new Point(1, 16), new Background("unlitigloo6",images.getImageList(images, "unlitigloo6")));
+        setBackgroundCell(world, new Point(2, 16), new Background("unlitigloo7",images.getImageList(images, "unlitigloo7")));
+        setBackgroundCell(world, new Point(3, 16), new Background("unlitigloo8",images.getImageList(images, "unlitigloo8")));
+        setBackgroundCell(world, new Point(0, 17), new Background("unlitigloo9",images.getImageList(images, "unlitigloo9")));
+        setBackgroundCell(world, new Point(1, 17), new Background("unlitigloo10",images.getImageList(images, "unlitigloo10")));
+        setBackgroundCell(world, new Point(2, 17), new Background("unlitigloo11",images.getImageList(images, "unlitigloo11")));
+        setBackgroundCell(world, new Point(3, 17), new Background("unlitigloo12",images.getImageList(images, "unlitigloo12")));
+    }
+
+    public void LightAll(WorldModel world, ImageStore images, EventScheduler scheduler){
+        setBackgroundCell(world, new Point(0, 15), new Background("igloo1",images.getImageList(images, "igloo1")));
+        setBackgroundCell(world, new Point(1, 15), new Background("igloo2",images.getImageList(images, "igloo2")));
+        setBackgroundCell(world, new Point(2, 15), new Background("igloo3",images.getImageList(images, "igloo3")));
+        setBackgroundCell(world, new Point(3, 15), new Background("igloo4",images.getImageList(images, "igloo4")));
+        setBackgroundCell(world, new Point(0, 16), new Background("igloo5",images.getImageList(images, "igloo5")));
+        setBackgroundCell(world, new Point(1, 16), new Background("igloo6",images.getImageList(images, "igloo6")));
+        setBackgroundCell(world, new Point(2, 16), new Background("igloo7",images.getImageList(images, "igloo7")));
+        setBackgroundCell(world, new Point(3, 16), new Background("igloo8",images.getImageList(images, "igloo8")));
+        setBackgroundCell(world, new Point(0, 17), new Background("igloo9",images.getImageList(images, "igloo9")));
+        setBackgroundCell(world, new Point(1, 17), new Background("igloo10",images.getImageList(images, "igloo10")));
+        setBackgroundCell(world, new Point(2, 17), new Background("igloo11",images.getImageList(images, "igloo11")));
+        setBackgroundCell(world, new Point(3, 17), new Background("igloo12",images.getImageList(images, "igloo12")));
+
+        for (UnlitTree t : this.UnlitTrees){
+            t.transform(t, world, scheduler, images);
+        }
+        setBackgroundCell(world, new Point(10, 8), new Background("redH",images.getImageList(images, "redH")));
+        setBackgroundCell(world, new Point(11, 8), new Background("greenA",images.getImageList(images, "greenA")));
+        setBackgroundCell(world, new Point(12, 8), new Background("redP",images.getImageList(images, "redP")));
+        setBackgroundCell(world, new Point(13, 8), new Background("greenP",images.getImageList(images, "greenP")));
+        setBackgroundCell(world, new Point(14, 8), new Background("redY",images.getImageList(images, "redY")));
+        setBackgroundCell(world, new Point(8, 10), new Background("greenH",images.getImageList(images, "greenH")));
+        setBackgroundCell(world, new Point(9, 10), new Background("redO",images.getImageList(images, "redO")));
+        setBackgroundCell(world, new Point(10, 10), new Background("greenL",images.getImageList(images, "greenL")));
+        setBackgroundCell(world, new Point(11, 10), new Background("redI",images.getImageList(images, "redI")));
+        setBackgroundCell(world, new Point(12, 10), new Background("greenD",images.getImageList(images, "greenD")));
+        setBackgroundCell(world, new Point(13, 10), new Background("redA",images.getImageList(images, "redA")));
+        setBackgroundCell(world, new Point(14, 10), new Background("greenY",images.getImageList(images, "greenY")));
+        setBackgroundCell(world, new Point(15, 10), new Background("redS",images.getImageList(images, "redS")));
+        setBackgroundCell(world, new Point(16, 10), new Background("greenMk",images.getImageList(images, "greenMk")));
+    }
+
 
 }

@@ -17,8 +17,7 @@ public final class Background
     }
     public static PImage getCurrentImage(Object entity) {
         if (entity instanceof Background) {
-            return ((Background)entity).images.get(
-                    ((Background)entity).imageIndex);
+            return ((Background)entity).images.get(((Background)entity).imageIndex);
         }
         else if (entity instanceof Entity) {
             return ((Entity)entity).getImages().get(((Entity)entity).getImageIndex());
@@ -30,9 +29,9 @@ public final class Background
         }
     }
 
-
-
-
+    public String getId(){
+        return this.id;
+    }
 
 
 }

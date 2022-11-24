@@ -17,12 +17,17 @@ public class DudeFull extends Dude {
             EventScheduler scheduler)
     {
         Optional<Entity> fullTarget =
-                world.findNearest(world, d.getPosition(), new ArrayList<>(Arrays.asList(House.class)));
+                world.findNearest(world, d.getPosition(), new ArrayList<>(Arrays.asList(snowyTree.class)));
+        if (fullTarget.isEmpty()){
+            ((DudeFull)d).transform(d, world, scheduler, imageStore);
+        }
 
         if (fullTarget.isPresent() && this.moveTo(d, world,
                 fullTarget.get(), scheduler))
         {
             this.transform(d, world, scheduler, imageStore);
+            fullTarget.get().setHealth(1);
+            ((snowyTree)fullTarget.get()).transform(fullTarget.get(), world, scheduler, imageStore);
         }
         else {
             scheduler.scheduleEvent(scheduler, d,

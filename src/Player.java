@@ -69,7 +69,7 @@ public class Player extends Transformable{
     public void setNewPoint(int dy, int dx, WorldModel world, EventScheduler scheduler, ImageStore imagestore){
         Point testPos = new Point(this.position.x + dx, this.position.y + dy);
         if (withinBoundsPlayer(testPos)) {
-            if (world.getOccupancyCell(world, testPos) == null || world.getOccupancyCell(world, testPos).getClass() != House.class) {//null means background tile
+            if ((world.getOccupancyCell(world, testPos) == null || world.getOccupancyCell(world, testPos).getClass() == Player.class || world.getOccupancyCell(world, testPos).getClass() == Tree.class || world.getOccupancyCell(world, testPos).getClass() == snowyTree.class) && (!world.getBackgroundCell(world, testPos).getId().startsWith("house") && !world.getBackgroundCell(world, testPos).getId().startsWith("unliti") && !world.getBackgroundCell(world, testPos).getId().startsWith("igloo"))) {//null means background tile
                 this.position.x += dx;
                 this.position.y += dy;
                 nextImage(this);

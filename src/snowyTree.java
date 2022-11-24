@@ -17,6 +17,20 @@ public class snowyTree extends TransformablePlant{
     }
     public boolean transform(Entity t, WorldModel world, EventScheduler scheduler, ImageStore imageStore)
     {
+        //this transform should change it into a unlit tree
+        if (this.getHealth() == 1){
+            UnlitTree st = new UnlitTree("unlitTree",
+                    t.getPosition(), imageStore.getImageList(imageStore, "unlitTree"), Functions.getNumFromRange(Functions.TREE_ANIMATION_MAX, Functions.TREE_ANIMATION_MIN), Functions.getNumFromRange(Functions.TREE_ACTION_MAX, Functions.TREE_ACTION_MIN), 0);
+
+            world.removeEntity(world, t);
+            scheduler.unscheduleAllEvents(scheduler, t);
+
+            world.addEntity(world, st);
+            this.scheduleActions(st, scheduler, world, imageStore);
+
+            return true;
+        }
+        else {
             Tree st = new Tree(t.getId(),
                     t.getPosition(), imageStore.getImageList(imageStore, Functions.TREE_KEY), Functions.getNumFromRange(Functions.TREE_ANIMATION_MAX, Functions.TREE_ANIMATION_MIN), Functions.getNumFromRange(Functions.TREE_ACTION_MAX, Functions.TREE_ACTION_MIN), 0);
 
@@ -26,9 +40,8 @@ public class snowyTree extends TransformablePlant{
             world.addEntity(world, st);
             this.scheduleActions(st, scheduler, world, imageStore);
 
-            //System.out.println("Hello");
-
             return true;
+        }
     }
 
     public void executeActivity(Entity t, WorldModel world, ImageStore imageStore, EventScheduler scheduler)

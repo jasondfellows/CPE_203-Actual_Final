@@ -15,12 +15,25 @@ public class DudeNotFull extends Dude{
             ImageStore imageStore,
             EventScheduler scheduler)
     {
-        Optional<Entity> target =
-                world.findNearest(world, d.getPosition(), new ArrayList<>(Arrays.asList(Tree.class, Sapling.class)));
+        Point target =
+                world.findNearestBackground(world, d.getPosition());
+        if (target == null){
+            target = new Point(3, 17);
+            if (d.getPosition().adjacent(d.getPosition(), target)){
+                world.removeEntity(world, d);
+                scheduler.unscheduleAllEvents(scheduler, d);
+                world.transformIgloo(world, imageStore);
+                world.numInHouse ++;
+            }
+            if (world.numInHouse == 4){
+                world.LightAll(world, imageStore, scheduler);
+                world.numInHouse ++;
+            }
+        }
 
-        if (!target.isPresent() || !moveTo(d, world,
-                target.get(),
-                scheduler)
+        if (!moveTo(d, world,
+                target,
+                scheduler, imageStore)
                 || !transform(d, world, scheduler, imageStore))
         {
             scheduler.scheduleEvent(scheduler, d,
@@ -35,7 +48,7 @@ public class DudeNotFull extends Dude{
             EventScheduler scheduler,
             ImageStore imageStore)
     {
-        if (this.getResourceCount() >= this.getResourceLimit()) {
+        if (this.getResourceCount() >= 0) {
             DudeFull miner = new DudeFull(d.getId(),
                     d.getPosition(), d.getImages(), this.getAnimationPeriod(),
                     this.getActionPeriod(), 0,
@@ -70,16 +83,17 @@ public class DudeNotFull extends Dude{
     public boolean moveTo(
             Entity dude,
             WorldModel world,
-            Entity target,
-            EventScheduler scheduler)
+            Point target,
+            EventScheduler scheduler, ImageStore imageStore)
     {
-        if (target.getPosition().adjacent(dude.getPosition(), target.getPosition())) {
+        if (target.adjacent(dude.getPosition(), target)) {
             this.setResourceCount(this.getResourceCount() + 1);
-            target.setHealth(target.getHealth() - 1);
+            world.setBackgroundCell(world, target, new Background("snowreg2", imageStore.getImageList(imageStore, "snowreg2")));
+            transform(dude, world, scheduler, imageStore);
             return true;
         }
         else {
-            Point nextPos = nextPositionDude(dude, world, target.getPosition());
+            Point nextPos = nextPositionDude(dude, world, target);
 
             if (!dude.getPosition().equals(nextPos)) {
                 Optional<Entity> occupant = world.getOccupant(world, nextPos);
