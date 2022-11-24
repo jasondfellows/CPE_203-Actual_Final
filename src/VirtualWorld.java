@@ -110,6 +110,13 @@ public static String LOAD_FILE_NAME = "world.sav";
 
                 //QUESTION: At (9,5) there is a house apparently?? How do we get rid of?
 
+                //the parseYETI function adds the yeti as a new House object - the coordinates of the yeti are set as
+                //(9,5) so the code thinks theres a house there. I had this problem too when I was making the igloo bigger -
+                //everything gets kinda messed up when the size of an entity is bigger than 32 pixels, cause in the code it can only
+                //occupy one square at a time. I fixed it by creating 12 separate House objects, with each being a different
+                //32-pixel segment of the igloo picture. It is very tedious to do it like that, but idk how else to get the collision
+                //and everything to line up.
+
             }
 
     }

@@ -29,21 +29,21 @@ public final class WorldModel
     public void setBackgroundCell(
             WorldModel world, Point pos, Background background)
     {
-        world.background[(int)pos.y][(int)pos.x] = background;
+        world.background[pos.y][pos.x] = background;
     }
 
     public Background getBackgroundCell(WorldModel world, Point pos) {
-        return world.background[(int)pos.y][(int)pos.x];
+        return world.background[pos.y][pos.x];
     }
 
     public void setOccupancyCell(
             WorldModel world, Point pos, Entity entity)
     {
-        world.occupancy[(int)pos.y][(int)pos.x] = entity;
+        world.occupancy[pos.y][pos.x] = entity;
     }
 
     public Entity getOccupancyCell(WorldModel world, Point pos) {
-        return world.occupancy[(int)pos.y][(int)pos.x];
+        return world.occupancy[pos.y][pos.x];
     }
 
     public Optional<Entity> getOccupant(WorldModel world, Point pos) {
@@ -87,10 +87,10 @@ public final class WorldModel
         }
         else {
             Entity nearest = entities.get(0);
-            int nearestDistance = (int)pos.distanceSquared(nearest.getPosition(), pos);
+            int nearestDistance = pos.distanceSquared(nearest.getPosition(), pos);
 
             for (Entity other : entities) {
-                int otherDistance = (int)pos.distanceSquared(other.getPosition(), pos);
+                int otherDistance = pos.distanceSquared(other.getPosition(), pos);
 
                 if (otherDistance < nearestDistance) {
                     nearest = other;
