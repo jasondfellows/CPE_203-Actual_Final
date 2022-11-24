@@ -361,7 +361,8 @@ public final class WorldModel
                 case Functions.OBSTACLE_KEY:
                     return parseObstacle(properties, world, imageStore);
                 case Functions.FAIRY_KEY:
-                    return parseFairy(properties, world, imageStore);
+                    return true;
+//                    return parseFairy(properties, world, imageStore);
                 case Functions.HOUSE_1KEY, Functions.HOUSE_2KEY, Functions.HOUSE_3KEY, Functions.HOUSE_4KEY, Functions.HOUSE_5KEY, Functions.HOUSE_6KEY, Functions.HOUSE_7KEY, Functions.HOUSE_8KEY, Functions.HOUSE_9KEY, Functions.HOUSE_10KEY, Functions.HOUSE_11KEY, Functions.HOUSE_12KEY:
                     return true;
                 case Functions.SNOWY_TREE_KEY:

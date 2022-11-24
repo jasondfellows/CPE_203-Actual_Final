@@ -1255,7 +1255,6 @@ background snowreg2 3 8
 background snowreg2 27 20
 background snowreg2 16 10
 background snowreg2 10 7
-background snowreg2 8 8
 background snowreg2 25 18
 background snowreg2 22 17
 background snowreg2 1 8
@@ -1319,14 +1318,25 @@ background snowreg2 7 10
 background snowreg2 7 11
 background snowreg2 7 12
 snowytree tree_27_1 27 1 384 1266 2
-snowytree tree_1_14 1 14 366 1165 2
+snowytree tree_1_14 2 12 366 1165 2
 snowytree tree_6_22 6 22 328 1155 2
 snowytree tree_25_27 25 27 471 1004 1
 snowytree tree_24_5 24 5 328 1194 2
 snowytree tree_5_21 5 21 550 1278 1
 snowytree tree_26_26 26 26 339 1113 1
 snowytree tree_4_25 4 25 170 1038 1
-snowytree tree_36_25 36 25 124 1283 1
+snowytree tree_36_25 1 8 124 1283 1
+snowytree tree_36_25 4 11 124 1283 1
+snowytree tree_36_25 6 15 124 1283 1
+snowytree tree_36_25 23 14 124 1283 1
+snowytree tree_36_25 21 10 124 1283 1
+snowytree tree_36_25 22 8 124 1283 1
+snowytree tree_36_25 17 16 124 1283 1
+snowytree tree_36_25 13 1 124 1283 1
+snowytree tree_36_25 22 1 124 1283 1
+snowytree tree_36_25 5 7 124 1283 1
+snowytree tree_36_25 18 7 124 1283 1
+snowytree tree_36_25 3 8 124 1283 1
 dude dude_4_3 4 3 3 848 100
 snowytree tree_17_3 17 3 61 1050 2
 fairy fairy_13_10 13 10 51 51
