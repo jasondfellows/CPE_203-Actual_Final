@@ -61,7 +61,9 @@ public final class Functions
     public static final int DUDE_ID = 1;
     public static final int DUDE_COL = 2;
     public static final int DUDE_ROW = 3;
-    public static final int DUDE_LIMIT = 4;
+//    public static final int DUDE_LIMIT = 4;
+    public static final int DUDE_LIMIT = 10; // change to 10 for player
+
     public static final int DUDE_ACTION_PERIOD = 5;
     public static final int DUDE_ANIMATION_PERIOD = 6;
     public static final int PLAYER_ANIMATION_PERIOD = 4;
@@ -86,6 +88,12 @@ public final class Functions
     public static final int KEYED_RED_IDX = 2;
     public static final int KEYED_GREEN_IDX = 3;
     public static final int KEYED_BLUE_IDX = 4;
+
+    public static final String YETI_1KEY = "yeti1";
+    public static final int YETI_NUM_PROPERTIES = 4;
+    public static final int YETI_ID = 1;
+    public static final int YETI_COL = 2;
+    public static final int YETI_ROW = 3;
 
     public static int getNumFromRange(int max, int min)
     {
