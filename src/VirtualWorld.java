@@ -105,6 +105,11 @@ public static String LOAD_FILE_NAME = "world.sav";
                     //um set to above resourceLimit so this if statement will never be entered again. Otherwise it might be even after Yeti is removed.
                     player.setResourceCount(player.getResourceLimit() * 10);
                     System.out.println("[Also, Player has 10 SNOW! code to get rid of Yeti and bring in lights]");
+                    world.worldEvent(world, scheduler, imageStore, new Point(12, 8));
+                    WorldModel.parseDude(new String[]{"dude"}, world, imageStore, new Point(10, 5), scheduler);
+                    WorldModel.parseDude(new String[]{"dude"}, world, imageStore, new Point(14, 5), scheduler);
+                    WorldModel.parseDude(new String[]{"dude"}, world, imageStore, new Point(10, 11), scheduler);
+                    WorldModel.parseDude(new String[]{"dude"}, world, imageStore, new Point(14, 11), scheduler);
                     world.removeEntityAt(world, new Point(9, 5));
                 }
 
