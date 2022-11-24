@@ -598,8 +598,6 @@ background snowreg2 36 14
 background snowreg2 37 14
 background snowreg2 38 14
 background snowreg2 39 14
-background snowreg2 2 15
-background snowreg2 3 15
 background snowreg2 4 15
 background snowreg2 5 15
 background snowreg2 6 15
@@ -636,10 +634,6 @@ background snowreg2 36 15
 background snowreg2 37 15
 background snowreg2 38 15
 background snowreg2 39 15
-background snowreg2 0 16
-background snowreg2 1 16
-background snowreg2 2 16
-background snowreg2 3 16
 background snowreg2 5 16
 background snowreg2 6 16
 background snowreg2 7 16
@@ -675,10 +669,6 @@ background snowreg2 36 16
 background snowreg2 37 16
 background snowreg2 38 16
 background snowreg2 39 16
-background snowreg2 0 17
-background snowreg2 1 17
-background snowreg2 2 17
-background snowreg2 3 17
 background snowreg2 5 17
 background snowreg2 6 17
 background snowreg2 7 17
@@ -1283,8 +1273,6 @@ background snowreg2 20 14
 background snowreg2 8 7
 background snowreg2 26 19
 background snowreg2 32 21
-background snowreg2 0 15
-background snowreg2 1 15
 background snowreg2 4 16
 background snowreg2 4 17
 snowytree tree_35_27 35 27 256 1168 1
@@ -1298,7 +1286,7 @@ snowytree tree_18_4 18 4 513 1330 2
 snowytree tree_2_25 2 25 93 1041 2
 snowytree tree_26_1 26 1 129 1231 1
 snowytree tree_1_1 1 1 419 1335 1
-snowytree tree_16_4 16 4 187 1253 2
+snowytree tree_16_4 16 3 187 1253 2
 snowytree tree_7_3 7 3 438 1354 2
 snowytree tree_1_2 1 2 553 1206 1
 fairy fairy_39_29 39 29 51 51
@@ -1351,16 +1339,16 @@ snowytree tree_26_9 26 9 594 1345 1
 snowytree tree_11_14 11 14 173 1274 1
 snowytree tree_31_6 31 6 69 1273 1
 snowytree tree_5_5 5 5 545 1343 1
-house1 house1 0 15
-house2 house1 1 15
-house3 house1 2 15
-house4 house1 3 15
-house5 house1 0 16
-house6 house1 1 16
-house7 house1 2 16
-house8 house1 3 16
-house9 house1 0 17
-house10 house1 1 17
-house11 house1 2 17
-house12 house1 3 17
+background house1 0 15
+background house2 1 15
+background house3 2 15
+background house4 3 15
+background house5 0 16
+background house6 1 16
+background house7 2 16
+background house8 3 16
+background house9 0 17
+background house10 1 17
+background house11 2 17
+background house12 3 17
 yeti1 yet1 9 5
