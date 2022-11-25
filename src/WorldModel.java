@@ -260,8 +260,13 @@ public final class WorldModel
     public static boolean parseDude(
             String[] properties, WorldModel world, ImageStore imageStore, Point pt, EventScheduler scheduler)
     {
-        DudeNotFull entity = new DudeNotFull("dude",
-                pt, imageStore.getImageList(imageStore, Functions.DUDE_KEY), Functions.DUDE_ANIMATION_PERIOD,
+//        DudeNotFull entity = new DudeNotFull("dude",
+//                pt, imageStore.getImageList(imageStore, Functions.DUDE_KEY), Functions.DUDE_ANIMATION_PERIOD,
+//                Functions.DUDE_ACTION_PERIOD, 1,
+//                Functions.DUDE_LIMIT, 0
+//        );
+        DudeNotFull entity = new DudeNotFull("reindeer",
+                pt, imageStore.getImageList(imageStore, "reindeer"), Functions.DUDE_ANIMATION_PERIOD,
                 Functions.DUDE_ACTION_PERIOD, 1,
                 Functions.DUDE_LIMIT, 0
         );
@@ -323,24 +328,6 @@ public final class WorldModel
         return properties.length == Functions.OBSTACLE_NUM_PROPERTIES;
     }
 
-    public static boolean parseYETI(
-            String[] properties, WorldModel world, ImageStore imageStore)
-    {
-        System.out.println("yeti");
-        if (properties.length == Functions.YETI_NUM_PROPERTIES) {
-            Point pt = new Point(Integer.parseInt(properties[Functions.YETI_COL]),
-                    Integer.parseInt(properties[Functions.YETI_ROW]));
-
-            House yeti = new House(properties[Functions.YETI_ID], pt,
-                    imageStore.getImageList(imageStore, Functions.YETI_1KEY), 0);
-
-            world.tryAddEntity(world, yeti);
-            System.out.println("add yeti");
-        }
-
-        return properties.length == Functions.HOUSE_NUM_PROPERTIES;
-    }
-
     public static boolean withinBounds(WorldModel world, Point pos) {
         return pos.y >= 0 && pos.y < world.numRows && pos.x >= 0
                 && pos.x < world.numCols;
@@ -369,8 +356,6 @@ public final class WorldModel
                     return parseTree(properties, world, imageStore);
                 case Functions.SAPLING_KEY:
                     return parseSapling(properties, world, imageStore);
-                case Functions.YETI_1KEY:
-                    return parseYETI(properties, world, imageStore);
             }
         }
 
@@ -472,6 +457,36 @@ public final class WorldModel
         setBackgroundCell(world, new Point(14, 10), new Background("greenY",images.getImageList(images, "greenY")));
         setBackgroundCell(world, new Point(15, 10), new Background("redS",images.getImageList(images, "redS")));
         setBackgroundCell(world, new Point(16, 10), new Background("greenMk",images.getImageList(images, "greenMk")));
+    }
+
+
+    public void removeYeti(WorldModel world, ImageStore images) {
+        Background a = new Background("snowreg2", images.getImageList(images, "snowreg2"));
+        setBackgroundCell(world, new Point(9, 5), a);
+        setBackgroundCell(world, new Point(10, 5), a);
+        setBackgroundCell(world, new Point(11, 5), a);
+        setBackgroundCell(world, new Point(12, 5), a);
+        setBackgroundCell(world, new Point(13, 5), a);
+        setBackgroundCell(world, new Point(9, 6), a);
+        setBackgroundCell(world, new Point(10, 6), a);
+        setBackgroundCell(world, new Point(11, 6), a);
+        setBackgroundCell(world, new Point(12, 6), a);
+        setBackgroundCell(world, new Point(13, 6), a);
+        setBackgroundCell(world, new Point(9, 7), a);
+        setBackgroundCell(world, new Point(10, 7), a);
+        setBackgroundCell(world, new Point(11, 7), a);
+        setBackgroundCell(world, new Point(12, 7), a);
+        setBackgroundCell(world, new Point(13, 7), a);
+        setBackgroundCell(world, new Point(9, 8), a);
+        setBackgroundCell(world, new Point(10, 8), a);
+        setBackgroundCell(world, new Point(11, 8), a);
+        setBackgroundCell(world, new Point(12, 8), a);
+        setBackgroundCell(world, new Point(13, 8), a);
+        setBackgroundCell(world, new Point(9, 9), a);
+        setBackgroundCell(world, new Point(10, 9), a);
+        setBackgroundCell(world, new Point(11, 9), a);
+        setBackgroundCell(world, new Point(12, 9), a);
+        setBackgroundCell(world, new Point(13, 9), a);
     }
 
 

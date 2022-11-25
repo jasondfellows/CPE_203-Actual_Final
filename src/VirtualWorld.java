@@ -71,6 +71,7 @@ public static String LOAD_FILE_NAME = "world.sav";
 
         nextTime = System.currentTimeMillis() + TIMER_ACTION_PERIOD;
         player = WorldModel.parsePlayer(world, imageStore);
+
     }
 
     public void draw() {
@@ -99,28 +100,26 @@ public static String LOAD_FILE_NAME = "world.sav";
 
         if(onYeti(pressed) == true && onYeti(player.getPosition()) == true)
             {
-                if (player.getResourceCount() <= player.getResourceLimit())
+                if (player.getResourceCount() < player.getResourceLimit())
                 {
-                    System.out.println("Player is on Yeti AND Yeti has been clicked AND Player has enough snow");
+                    System.out.println("You need " + (player.getResourceLimit()-player.getResourceCount()) + " more snow to activate." );
+                }
+
+                if (player.getResourceCount() == player.getResourceLimit())
+                {
+                    //System.out.println("Player is on Yeti AND Yeti has been clicked AND Player has enough snow");
                     //um set to above resourceLimit so this if statement will never be entered again. Otherwise it might be even after Yeti is removed.
                     player.setResourceCount(player.getResourceLimit() * 10);
-                    System.out.println("[Also, Player has 10 SNOW! code to get rid of Yeti and bring in lights]");
+                    world.removeYeti(world, imageStore);
+
+//                    System.out.println("[Also, Player has 10 SNOW! code to get rid of Yeti and bring in lights]");
                     world.worldEvent(world, scheduler, imageStore, new Point(12, 8));
                     WorldModel.parseDude(new String[]{"dude"}, world, imageStore, new Point(10, 5), scheduler);
                     WorldModel.parseDude(new String[]{"dude"}, world, imageStore, new Point(14, 5), scheduler);
                     WorldModel.parseDude(new String[]{"dude"}, world, imageStore, new Point(10, 11), scheduler);
                     WorldModel.parseDude(new String[]{"dude"}, world, imageStore, new Point(14, 11), scheduler);
-                    world.removeEntityAt(world, new Point(9, 5));
                 }
 
-                //QUESTION: At (9,5) there is a house apparently?? How do we get rid of?
-
-                //the parseYETI function adds the yeti as a new House object - the coordinates of the yeti are set as
-                //(9,5) so the code thinks theres a house there. I had this problem too when I was making the igloo bigger -
-                //everything gets kinda messed up when the size of an entity is bigger than 32 pixels, cause in the code it can only
-                //occupy one square at a time. I fixed it by creating 12 separate House objects, with each being a different
-                //32-pixel segment of the igloo picture. It is very tedious to do it like that, but idk how else to get the collision
-                //and everything to line up.
 
             }
 
