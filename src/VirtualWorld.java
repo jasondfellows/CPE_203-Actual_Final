@@ -89,7 +89,7 @@ public static String LOAD_FILE_NAME = "world.sav";
     public void mousePressed() {
         Point pressed = mouseToPoint(mouseX, mouseY);
 
-        System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
+//        System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
 
         Optional<Entity> entityOptional = world.getOccupant(world, pressed);
         if (entityOptional.isPresent())
