@@ -32,6 +32,7 @@ public final class Functions
     public static final String HOUSE_10KEY = "house10";
     public static final String HOUSE_11KEY = "house11";
     public static final String HOUSE_12KEY = "house12";
+    public static final String EVIL_SNOWMAN_KEY = "evilSnowman";
     public static final int HOUSE_NUM_PROPERTIES = 4;
     public static final int HOUSE_ID = 1;
     public static final int HOUSE_COL = 2;

@@ -16,6 +16,7 @@ public final class WorldModel
     public Set<Entity> entities;
     public int numInHouse;
     public LinkedList<UnlitTree> UnlitTrees;
+    public static Random speedPicker;
 
     public WorldModel(int numRows, int numCols, Background defaultBackground) {
         this.numRows = numRows;
@@ -25,6 +26,7 @@ public final class WorldModel
         this.entities = new HashSet<>();
         this.numInHouse = 0;
         this.UnlitTrees = new LinkedList<>();
+        this.speedPicker = new Random();
 
         for (int row = 0; row < numRows; row++) {
             Arrays.fill(this.background[row], defaultBackground);
@@ -50,8 +52,8 @@ public final class WorldModel
         return world.occupancy[pos.y][pos.x];
     }
 
-    public Optional<Entity> getOccupant(WorldModel world, Point pos) {
-        if (world.isOccupied(world, pos)) {
+    public Optional<Entity> getOccupant(Entity entity, WorldModel world, Point pos) {
+        if (world.isOccupied(entity, world, pos)) {
             return Optional.of(world.getOccupancyCell(world, pos));
         }
         else {
@@ -59,7 +61,7 @@ public final class WorldModel
         }
     }
     public void tryAddEntity(WorldModel world, Entity entity) {
-        if (world.isOccupied(world, entity.getPosition())) {
+        if (world.isOccupied(entity, world, entity.getPosition())) {
             // arguably the wrong type of exception, but we are not
             // defining our own exceptions yet
             throw new IllegalArgumentException("position occupied");
@@ -284,10 +286,10 @@ public final class WorldModel
         if (properties.length == Functions.FAIRY_NUM_PROPERTIES) {
             Point pt = new Point(Integer.parseInt(properties[Functions.FAIRY_COL]),
                     Integer.parseInt(properties[Functions.FAIRY_ROW]));
-            Fairy entity = new Fairy(properties[Functions.FAIRY_ID],
-                    pt,  imageStore.getImageList(imageStore, Functions.FAIRY_KEY),
+            Fairy entity = new Fairy("evilSnowman",
+                    pt,  imageStore.getImageList(imageStore, Functions.EVIL_SNOWMAN_KEY),
                     Integer.parseInt(properties[Functions.FAIRY_ANIMATION_PERIOD]),
-                    Integer.parseInt(properties[Functions.FAIRY_ACTION_PERIOD]), 0
+                    speedPicker.nextInt(110, 125), 0
                    );
             world.tryAddEntity(world, entity);
         }
@@ -347,9 +349,8 @@ public final class WorldModel
                     //return parseDude(properties, world, imageStore);
                 case Functions.OBSTACLE_KEY:
                     return parseObstacle(properties, world, imageStore);
-                case Functions.FAIRY_KEY:
-                    return true;
-//                    return parseFairy(properties, world, imageStore);
+                case Functions.EVIL_SNOWMAN_KEY:
+                    return parseFairy(properties, world, imageStore);
                 case Functions.HOUSE_1KEY, Functions.HOUSE_2KEY, Functions.HOUSE_3KEY, Functions.HOUSE_4KEY, Functions.HOUSE_5KEY, Functions.HOUSE_6KEY, Functions.HOUSE_7KEY, Functions.HOUSE_8KEY, Functions.HOUSE_9KEY, Functions.HOUSE_10KEY, Functions.HOUSE_11KEY, Functions.HOUSE_12KEY:
                     return true;
                 case Functions.SNOWY_TREE_KEY:
@@ -385,7 +386,15 @@ public final class WorldModel
             lineNumber++;
         }
     }
-    public boolean isOccupied(WorldModel world, Point pos) {
+    public boolean isOccupied(Entity entity, WorldModel world, Point pos) {
+        if (entity.getClass() == Fairy.class){
+            if (world.getBackgroundCell(world, pos).getId().startsWith("yeti")){
+                return true;
+            }
+            else if (world.getOccupancyCell(world, pos) != null){
+                return true;
+            }
+        }
         if (this.withinBounds(world, pos)) {
             if (world.getBackgroundCell(world, pos).getId().startsWith("house") || (world.getBackgroundCell(world, pos).getId().startsWith("unliti"))){
                 return true;

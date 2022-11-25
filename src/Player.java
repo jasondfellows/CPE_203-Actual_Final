@@ -20,16 +20,16 @@ public class Player extends Transformable{
             Entity d, WorldModel world, Point destPos) {
         int horiz = Integer.signum((int)destPos.x - (int)d.getPosition().x);
         Point newPos = new Point(d.getPosition().x + horiz, d.getPosition().y);
-        if (horiz == 0 || world.isOccupied(world, newPos)&& world.getOccupancyCell(world, newPos).getClass() != Stump.class) {
+        if (horiz == 0 || world.isOccupied(d, world, newPos)&& world.getOccupancyCell(world, newPos).getClass() != Stump.class) {
             int vert = Integer.signum((int)destPos.y - (int)d.getPosition().y);
             newPos = new Point(d.getPosition().x, d.getPosition().y + vert);
 
-            if (vert == 0 || world.isOccupied(world, newPos) && world.getOccupancyCell(world, newPos).getClass() != Stump.class) {
+            if (vert == 0 || world.isOccupied(d, world, newPos) && world.getOccupancyCell(world, newPos).getClass() != Stump.class) {
                 newPos = d.getPosition();
             }
         }
         Point out = (AStarPathing.computePath(d.getPosition(), newPos, p ->  WorldModel.withinBounds(world, p)
-                        && (!world.isOccupied(world, p) || world.getOccupancyCell(world, p).getClass() == Stump.class),
+                        && (!world.isOccupied(d, world, p) || world.getOccupancyCell(world, p).getClass() == Stump.class),
                 Point.CARDINAL_NEIGHBORS)).get(0);
         return out;
     }
@@ -69,7 +69,7 @@ public class Player extends Transformable{
     public void setNewPoint(int dy, int dx, WorldModel world, EventScheduler scheduler, ImageStore imagestore){
         Point testPos = new Point(this.position.x + dx, this.position.y + dy);
         if (withinBoundsPlayer(testPos)) {
-            if ((world.getOccupancyCell(world, testPos) == null || world.getOccupancyCell(world, testPos).getClass() == Player.class || world.getOccupancyCell(world, testPos).getClass() == Tree.class || world.getOccupancyCell(world, testPos).getClass() == snowyTree.class) && (!world.getBackgroundCell(world, testPos).getId().startsWith("house") && !world.getBackgroundCell(world, testPos).getId().startsWith("unliti") && !world.getBackgroundCell(world, testPos).getId().startsWith("igloo"))) {//null means background tile
+            if ((world.getOccupancyCell(world, testPos) == null || world.getOccupancyCell(world, testPos).getClass() == Player.class || world.getOccupancyCell(world, testPos).getClass() == Tree.class || world.getOccupancyCell(world, testPos).getClass() == snowyTree.class || world.getOccupancyCell(world, testPos).getClass() == Fairy.class) && (!world.getBackgroundCell(world, testPos).getId().startsWith("house") && !world.getBackgroundCell(world, testPos).getId().startsWith("unliti") && !world.getBackgroundCell(world, testPos).getId().startsWith("igloo"))) {//null means background tile
                 this.position.x += dx;
                 this.position.y += dy;
                 nextImage(this);
@@ -135,7 +135,7 @@ public class Player extends Transformable{
             Point nextPos = nextPositionPlayer(dude, world, target.getPosition());
 
             if (!dude.getPosition().equals(nextPos)) {
-                Optional<Entity> occupant = world.getOccupant(world, nextPos);
+                Optional<Entity> occupant = world.getOccupant(dude, world, nextPos);
                 if (occupant.isPresent()) {
                     scheduler.unscheduleAllEvents(scheduler, occupant.get());
                 }

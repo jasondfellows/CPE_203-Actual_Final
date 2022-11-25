@@ -93,12 +93,12 @@ public static String LOAD_FILE_NAME = "world.sav";
 
 //        System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
 
-        Optional<Entity> entityOptional = world.getOccupant(world, pressed);
-        if (entityOptional.isPresent())
-        {
-            Entity entity = entityOptional.get();
-            System.out.println(entity.getId() + ": " + entity.toString() + " : " + entity.getHealth());
-        }
+//        Optional<Entity> entityOptional = world.getOccupant(world, pressed);
+//        if (entityOptional.isPresent())
+//        {
+//            Entity entity = entityOptional.get();
+//            System.out.println(entity.getId() + ": " + entity.toString() + " : " + entity.getHealth());
+//        }
 
         if(onYeti(pressed) == true && onYeti(player.getPosition()) == true)
             {

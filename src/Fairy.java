@@ -25,16 +25,18 @@ public class Fairy extends Actionables{
             Entity target,
             EventScheduler scheduler)
     {
-        if (target.getPosition().adjacent(this.getPosition(), target.getPosition())) {
-            world.removeEntity(world, target);
-            scheduler.unscheduleAllEvents(scheduler, target);
+        if (target.getPosition().equals(this.getPosition())) {
+            //reset snow count
+            System.out.println("True");
+//            world.removeEntity(world, target);
+//            scheduler.unscheduleAllEvents(scheduler, target);
             return true;
         }
         else {
             Point nextPos = this.nextPositionFairy(f, world, target.getPosition());
 
             if (!this.getPosition().equals(nextPos)) {
-                Optional<Entity> occupant = world.getOccupant(world, nextPos);
+                Optional<Entity> occupant = world.getOccupant(f, world, nextPos);
                 if (occupant.isPresent()) {
                     scheduler.unscheduleAllEvents(scheduler, occupant.get());
                 }
@@ -50,11 +52,11 @@ public class Fairy extends Actionables{
         int horiz = Integer.signum((destPos.x - f.getPosition().x));
         Point newPos = new Point(f.getPosition().x + horiz, f.getPosition().y);
 
-        if (horiz == 0 || world.isOccupied(world, newPos)) {
+        if (horiz == 0 || world.isOccupied(f, world, newPos)) {
             int vert = Integer.signum(destPos.y - f.getPosition().y);
             newPos = new Point(f.getPosition().x, f.getPosition().y + vert);
 
-            if (vert == 0 || world.isOccupied(world, newPos)) {
+            if (vert == 0 || world.isOccupied(f, world, newPos)) {
                 newPos = f.getPosition();
             }
         }
@@ -68,16 +70,10 @@ public class Fairy extends Actionables{
             EventScheduler scheduler)
     {
         Optional<Entity> fairyTarget =
-                world.findNearest(world, f.getPosition(), new ArrayList<>(Arrays.asList(Stump.class)));
+                world.findNearest(world, f.getPosition(), new ArrayList<>(Arrays.asList(Player.class)));
 
         if (fairyTarget.isPresent()) {
-            Point tgtPos = fairyTarget.get().getPosition();
-
-            if (this.moveToFairy(f, world, fairyTarget.get(), scheduler)) {
-                    Sapling sapling = new Sapling("sapling_" + f.getId(), tgtPos,  imageStore.getImageList(imageStore, Functions.SAPLING_KEY), Functions.SAPLING_ACTION_ANIMATION_PERIOD, Functions.SAPLING_ACTION_ANIMATION_PERIOD, 0, Functions.SAPLING_HEALTH_LIMIT);
-                    world.addEntity(world, sapling);
-                    this.scheduleActions(sapling, scheduler, world, imageStore);
-            }
+            this.moveToFairy(f, world, fairyTarget.get(), scheduler);
         }
 
         scheduler.scheduleEvent(scheduler, f,

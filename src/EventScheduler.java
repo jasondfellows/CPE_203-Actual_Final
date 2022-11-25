@@ -23,8 +23,6 @@ public final class EventScheduler
             Action action,
             long afterPeriod)
     {
-        System.out.println(this.pendingEvents.size());
-        System.out.println(this.eventQueue.size());
         if (VirtualWorld.done){
             if(entity.getClass() == DudeNotFull.class){
                 return;

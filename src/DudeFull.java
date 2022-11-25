@@ -77,7 +77,7 @@ public class DudeFull extends Dude {
             Point nextPos = nextPositionDude(dude, world, target.getPosition());
 
             if (!dude.getPosition().equals(nextPos)) {
-                Optional<Entity> occupant = world.getOccupant(world, nextPos);
+                Optional<Entity> occupant = world.getOccupant(dude, world, nextPos);
                 if (occupant.isPresent()) {
                     scheduler.unscheduleAllEvents(scheduler, occupant.get());
                 }
