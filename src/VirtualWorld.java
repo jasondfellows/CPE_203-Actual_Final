@@ -34,6 +34,7 @@ public static String LOAD_FILE_NAME = "world.sav";
     public static final String FAST_FLAG = "-fast";
     public static final String FASTER_FLAG = "-faster";
     public static final String FASTEST_FLAG = "-fastest";
+    public static boolean done = false;
     public static final double FAST_SCALE = 0.5;
     public static final double FASTER_SCALE = 0.25;
     public static final double FASTEST_SCALE = 0.10;

@@ -28,6 +28,7 @@ public class DudeNotFull extends Dude{
             if (world.numInHouse == 4){
                 world.LightAll(world, imageStore, scheduler);
                 world.numInHouse ++;
+                VirtualWorld.done = true;
             }
         }
 

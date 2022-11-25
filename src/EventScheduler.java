@@ -23,6 +23,13 @@ public final class EventScheduler
             Action action,
             long afterPeriod)
     {
+        System.out.println(this.pendingEvents.size());
+        System.out.println(this.eventQueue.size());
+        if (VirtualWorld.done){
+            if(entity.getClass() == DudeNotFull.class){
+                return;
+            }
+        }
         long time = System.currentTimeMillis() + (long)(afterPeriod
                 * this.timeScale);
         Event event = new Event(action, time, entity);
