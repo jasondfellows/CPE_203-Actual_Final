@@ -51,6 +51,7 @@ public static String LOAD_FILE_NAME = "world.sav";
     public void settings() {
         size(VIEW_WIDTH, VIEW_HEIGHT);
     }
+    public boolean change_step = false;
 
     /*
        Processing entry point for "sketch" setup.
@@ -112,6 +113,8 @@ public static String LOAD_FILE_NAME = "world.sav";
                     //um set to above resourceLimit so this if statement will never be entered again. Otherwise it might be even after Yeti is removed.
                     player.setResourceCount(player.getResourceLimit() * 10);
                     world.removeYeti(world, imageStore);
+                    change_step = true;
+                    player.setImages(imageStore.getImageList(imageStore, "santa"));
 
 //                    System.out.println("[Also, Player has 10 SNOW! code to get rid of Yeti and bring in lights]");
                     world.worldEvent(world, scheduler, imageStore, new Point(12, 8));
@@ -144,20 +147,38 @@ public static String LOAD_FILE_NAME = "world.sav";
         if (key == CODED) {
             int dx = 0;
             int dy = 0;
+            if (change_step == true) {
+                switch (keyCode) {
+                    case UP:
+                        dy = -2;
+                        break;
+                    case DOWN:
+                        dy = 2;
+                        break;
+                    case LEFT:
+                        dx = -2;
+                        break;
+                    case RIGHT:
+                        dx = 2;
+                        break;
+                }
+            }
 
-            switch (keyCode) {
-                case UP:
-                    dy = -1;
-                    break;
-                case DOWN:
-                    dy = 1;
-                    break;
-                case LEFT:
-                    dx = -1;
-                    break;
-                case RIGHT:
-                    dx = 1;
-                    break;
+            else{
+                switch (keyCode) {
+                    case UP:
+                        dy = -1;
+                        break;
+                    case DOWN:
+                        dy = 1;
+                        break;
+                    case LEFT:
+                        dx = -1;
+                        break;
+                    case RIGHT:
+                        dx = 1;
+                        break;
+                }
             }
             player.setNewPoint(dy, dx, world, scheduler, imageStore);
         }

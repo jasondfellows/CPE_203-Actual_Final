@@ -35,6 +35,7 @@ public abstract class Entity
     public List<PImage> getImages(){
         return this.images;
     }
+    public void setImages(List<PImage> z) {this.images = z;}
 
     public String getId(){
         return this.id;
