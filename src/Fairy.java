@@ -87,4 +87,25 @@ public class Fairy extends Actionables{
         return "Fairy";
     }
 
+    public boolean transformFairy(
+            Entity d,
+            WorldModel world,
+            EventScheduler scheduler,
+            ImageStore imageStore)
+    {
+            DudeNotFull miner = new DudeNotFull("happySnowman",
+                    d.getPosition(), imageStore.getImageList(imageStore, "happySnowman"), Functions.DUDE_ANIMATION_PERIOD,
+                    Functions.DUDE_ACTION_PERIOD, 0,
+                    1, 0);
+
+            world.removeEntity(world, d);
+            scheduler.unscheduleAllEvents(scheduler, d);
+
+            world.addEntity(world, miner);
+            this.scheduleActions(miner, scheduler, world, imageStore);
+
+            return true;
+
+    }
+
 }

@@ -16,6 +16,7 @@ public final class WorldModel
     public Set<Entity> entities;
     public int numInHouse;
     public LinkedList<UnlitTree> UnlitTrees;
+    public static LinkedList<Fairy> EvilSnowmen;
     public static Random speedPicker;
 
     public WorldModel(int numRows, int numCols, Background defaultBackground) {
@@ -26,6 +27,7 @@ public final class WorldModel
         this.entities = new HashSet<>();
         this.numInHouse = 0;
         this.UnlitTrees = new LinkedList<>();
+        this.EvilSnowmen = new LinkedList<>();
         this.speedPicker = new Random();
 
         for (int row = 0; row < numRows; row++) {
@@ -292,6 +294,7 @@ public final class WorldModel
                     Integer.parseInt(properties[Functions.FAIRY_ANIMATION_PERIOD]),
                     speedPicker.nextInt(110, 125), 0
                    );
+            EvilSnowmen.add(entity);
             world.tryAddEntity(world, entity);
         }
 
@@ -408,6 +411,9 @@ public final class WorldModel
     }
     public void worldEvent(WorldModel world, EventScheduler scheduler, ImageStore images, Point pos){
         int i = 1;
+        for (Fairy s : this.EvilSnowmen){
+            s.transformFairy(s, world, scheduler, images);
+        }
         setBackgroundCell(world, pos, new Background("litsnow",images.getImageList(images, "litsnow")));
         while (i < 5){
             setBackgroundCell(world, new Point(pos.x, pos.y - i), new Background("litsnow",images.getImageList(images, "litsnow")));

@@ -25,7 +25,7 @@ public class DudeNotFull extends Dude{
                 world.transformIgloo(world, imageStore);
                 world.numInHouse ++;
             }
-            if (world.numInHouse == 4){
+            if (world.numInHouse == 8){
                 world.LightAll(world, imageStore, scheduler);
                 world.numInHouse ++;
                 VirtualWorld.done = true;
