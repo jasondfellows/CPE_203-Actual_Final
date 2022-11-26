@@ -25,6 +25,9 @@ public class Fairy extends Actionables{
             Entity target,
             EventScheduler scheduler)
     {
+        if (!VirtualWorld.moved){
+            return false;
+        }
         if (target.getPosition().equals(f.getPosition())) {
             //reset snow count
             if (((Player)target).getResourceCount() > 0) {

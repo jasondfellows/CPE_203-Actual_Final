@@ -35,6 +35,7 @@ public static String LOAD_FILE_NAME = "world.sav";
     public static final String FASTER_FLAG = "-faster";
     public static final String FASTEST_FLAG = "-fastest";
     public static boolean done = false;
+    public static boolean moved = false;
     public static final double FAST_SCALE = 0.5;
     public static final double FASTER_SCALE = 0.25;
     public static final double FASTEST_SCALE = 0.10;
@@ -84,7 +85,15 @@ public static String LOAD_FILE_NAME = "world.sav";
             nextTime = time + TIMER_ACTION_PERIOD;
         }
         WorldView.drawViewport(view);
+        if (!moved){
+            fill(0);
+            textSize(24);
+            text("Collect 10 snow, stand inside the yeti and click on him to win", 40, 50);
+            text("But watch out for snowmen - they will take half your snow!", 55, 100);
+            text("Press any arrow key to begin", 225, 150);
+        }
         if (!change_step) {
+            textSize(30);
             text("You have " + player.getResourceCount() + " snow", 530, 570);
         }
 
@@ -152,6 +161,7 @@ public static String LOAD_FILE_NAME = "world.sav";
         if (key == CODED) {
             int dx = 0;
             int dy = 0;
+            moved = true;
             if (change_step == true) {
                 switch (keyCode) {
                     case UP:
