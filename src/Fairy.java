@@ -87,7 +87,7 @@ public class Fairy extends Actionables{
         return "Fairy";
     }
 
-    public boolean transformFairy(
+    public DudeNotFull transformFairy(
             Entity d,
             WorldModel world,
             EventScheduler scheduler,
@@ -104,8 +104,7 @@ public class Fairy extends Actionables{
             world.addEntity(world, miner);
             this.scheduleActions(miner, scheduler, world, imageStore);
 
-            return true;
-
+            return miner;
     }
 
 }

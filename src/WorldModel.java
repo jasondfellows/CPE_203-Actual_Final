@@ -18,7 +18,7 @@ public final class WorldModel
     public LinkedList<UnlitTree> UnlitTrees;
     public static LinkedList<Fairy> EvilSnowmen;
     public static Random speedPicker;
-
+    public static int numSnowmen = 4;
     public WorldModel(int numRows, int numCols, Background defaultBackground) {
         this.numRows = numRows;
         this.numCols = numCols;
@@ -411,8 +411,12 @@ public final class WorldModel
     }
     public void worldEvent(WorldModel world, EventScheduler scheduler, ImageStore images, Point pos){
         int i = 1;
-        for (Fairy s : this.EvilSnowmen){
-            s.transformFairy(s, world, scheduler, images);
+        for (Fairy s : EvilSnowmen){
+            DudeNotFull d = s.transformFairy(s, world, scheduler, images);
+            if (Point.distance(d.getPosition(), pos) > 4){
+                scheduler.unscheduleAllEvents(scheduler, d);
+                numSnowmen --;
+            }
         }
         setBackgroundCell(world, pos, new Background("litsnow",images.getImageList(images, "litsnow")));
         while (i < 5){
