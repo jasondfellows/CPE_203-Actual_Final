@@ -18,10 +18,10 @@ public class Player extends Transformable{
 
     public Point nextPositionPlayer(
             Entity d, WorldModel world, Point destPos) {
-        int horiz = Integer.signum((int)destPos.x - (int)d.getPosition().x);
+        int horiz = Integer.signum(destPos.x - d.getPosition().x);
         Point newPos = new Point(d.getPosition().x + horiz, d.getPosition().y);
         if (horiz == 0 || world.isOccupied(d, world, newPos)&& world.getOccupancyCell(world, newPos).getClass() != Stump.class) {
-            int vert = Integer.signum((int)destPos.y - (int)d.getPosition().y);
+            int vert = Integer.signum(destPos.y - d.getPosition().y);
             newPos = new Point(d.getPosition().x, d.getPosition().y + vert);
 
             if (vert == 0 || world.isOccupied(d, world, newPos) && world.getOccupancyCell(world, newPos).getClass() != Stump.class) {
