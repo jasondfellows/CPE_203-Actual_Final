@@ -46,6 +46,7 @@ public class Player extends Transformable{
         return this.resourceLimit;
     }
 
+
     public void executeActivity(
             Entity d,
             WorldModel world,
@@ -146,57 +147,11 @@ public class Player extends Transformable{
         }
     }
 
-//    public boolean transform(Entity t, WorldModel world, EventScheduler scheduler, ImageStore imageStore)
-//    {
-//        if (((Tree)t).getHealth() <= 0) {
-//            Stump stump = new Stump(t.getId(),
-//                    t.getPosition(), imageStore.getImageList(imageStore, Functions.STUMP_KEY), 0);
-//
-//            world.removeEntity(world, t);
-//            scheduler.unscheduleAllEvents(scheduler, t);
-//
-//            world.addEntity(world, stump);
-//
-//            return true;
-//        }
-//        return false;
-//    }
 
-//    public boolean transform(
-//            Entity d,
-//            WorldModel world,
-//            EventScheduler scheduler,
-//            ImageStore imageStore)
-//    {
-//        DudeNotFull miner = new DudeNotFull(d.getId(),
-//                d.getPosition(), d.getImages(), this.getAnimationPeriod(),
-//                this.getActionPeriod(), 0,
-//                this.getResourceLimit(), 0);
-//
-//        world.removeEntity(world, d);
-//        scheduler.unscheduleAllEvents(scheduler, d);
-//
-//        world.addEntity(world, miner);
-//        this.scheduleActions(miner, scheduler, world, imageStore);
-//        return true;
-//    }
     public String toString(){
         return "Dude_Full";
     }
 
 }
 
-//    public boolean transform(Entity t, WorldModel world, EventScheduler scheduler, ImageStore imageStore)
-//    {
-//
-//        snowyTree st = new snowyTree(t.getId(),
-//                t.getPosition(), imageStore.getImageList(imageStore, Functions.SNOWY_TREE_KEY), 0, 0, 1);
-//
-//        world.removeEntity(world, t);
-//        scheduler.unscheduleAllEvents(scheduler, t);
-//
-//        world.addEntity(world, st);
-//
-//        return true;
-//
-//    }
+

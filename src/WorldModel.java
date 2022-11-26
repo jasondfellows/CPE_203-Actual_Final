@@ -64,7 +64,8 @@ public final class WorldModel
         if (world.isOccupied(entity, world, entity.getPosition())) {
             // arguably the wrong type of exception, but we are not
             // defining our own exceptions yet
-            throw new IllegalArgumentException("position occupied");
+//            throw new IllegalArgumentException("position occupied");
+            return;
         }
 
         this.addEntity(world, entity);
@@ -392,7 +393,7 @@ public final class WorldModel
                 return true;
             }
             else if (world.getOccupancyCell(world, pos) != null){
-                return true;
+                return world.getOccupancyCell(world, pos).getClass() != Player.class;
             }
         }
         if (this.withinBounds(world, pos)) {

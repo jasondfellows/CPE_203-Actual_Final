@@ -25,9 +25,11 @@ public class Fairy extends Actionables{
             Entity target,
             EventScheduler scheduler)
     {
-        if (target.getPosition().equals(this.getPosition())) {
+        if (target.getPosition().equals(f.getPosition())) {
             //reset snow count
-            System.out.println("True");
+            if (((Player)target).getResourceCount() > 0) {
+                ((Player) target).setResourceCount(((Player)target).getResourceCount()/2);
+            }
 //            world.removeEntity(world, target);
 //            scheduler.unscheduleAllEvents(scheduler, target);
             return true;

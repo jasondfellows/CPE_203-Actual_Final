@@ -73,7 +73,8 @@ public static String LOAD_FILE_NAME = "world.sav";
 
         nextTime = System.currentTimeMillis() + TIMER_ACTION_PERIOD;
         player = WorldModel.parsePlayer(world, imageStore);
-
+            textSize(30);
+            fill(100);
     }
 
     public void draw() {
@@ -82,8 +83,12 @@ public static String LOAD_FILE_NAME = "world.sav";
             this.scheduler.updateOnTime(this.scheduler, time);
             nextTime = time + TIMER_ACTION_PERIOD;
         }
-
         WorldView.drawViewport(view);
+        if (!change_step) {
+            text("You have " + player.getResourceCount() + " snow", 530, 570);
+        }
+
+
     }
 
     // Just for debugging and for P5
