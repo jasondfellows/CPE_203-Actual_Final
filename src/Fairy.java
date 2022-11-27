@@ -94,10 +94,10 @@ public class Fairy extends Actionables{
             Entity d,
             WorldModel world,
             EventScheduler scheduler,
-            ImageStore imageStore)
+            ImageStore imageStore, String imageString)
     {
-            DudeNotFull miner = new DudeNotFull("happySnowman",
-                    d.getPosition(), imageStore.getImageList(imageStore, "happySnowman"), Functions.DUDE_ANIMATION_PERIOD,
+            DudeNotFull miner = new DudeNotFull(imageString,
+                    d.getPosition(), imageStore.getImageList(imageStore, imageString), Functions.DUDE_ANIMATION_PERIOD,
                     Functions.DUDE_ACTION_PERIOD, 0,
                     1, 0);
 

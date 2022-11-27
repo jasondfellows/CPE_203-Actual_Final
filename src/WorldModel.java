@@ -412,10 +412,13 @@ public final class WorldModel
     public void worldEvent(WorldModel world, EventScheduler scheduler, ImageStore images, Point pos){
         int i = 1;
         for (Fairy s : EvilSnowmen){
-            DudeNotFull d = s.transformFairy(s, world, scheduler, images);
-            if (Point.distance(d.getPosition(), pos) > 4){
+            if (Point.distance(s.getPosition(), pos) > 4){
+                DudeNotFull d = s.transformFairy(s, world, scheduler, images, "happySnowman");
                 scheduler.unscheduleAllEvents(scheduler, d);
                 numSnowmen --;
+            }
+            else{
+                s.transformFairy(s, world, scheduler, images, "elf");
             }
         }
         setBackgroundCell(world, pos, new Background("litsnow",images.getImageList(images, "litsnow")));
