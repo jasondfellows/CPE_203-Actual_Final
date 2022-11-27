@@ -96,8 +96,6 @@ public static String LOAD_FILE_NAME = "world.sav";
             textSize(30);
             text("You have " + player.getResourceCount() + " snow", 530, 570);
         }
-
-
     }
 
     // Just for debugging and for P5
