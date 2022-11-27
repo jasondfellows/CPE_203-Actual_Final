@@ -252,12 +252,7 @@ public final class WorldModel
     public static Player parsePlayer(
             WorldModel world, ImageStore imageStore)
     {
-         Point pt = new Point(0, 0);
-            Player entity = new Player(Functions.DUDE_KEY,
-                    pt, imageStore.getImageList(imageStore, Functions.DUDE_KEY), Functions.PLAYER_ANIMATION_PERIOD,
-                    Functions.DUDE_ACTION_PERIOD, 0,
-                    Functions.DUDE_LIMIT, 0
-            );
+            Player entity = Player.getInstance(imageStore);
             world.addEntity(world, entity);
 
         return entity;

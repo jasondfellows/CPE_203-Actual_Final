@@ -10,11 +10,29 @@ public class Player extends Transformable{
     private final int resourceLimit;
     private AStarPathing path;
 
-    public Player(String id, Point position, List<PImage> images, int animationPeriod, int actionPeriod, int resourceCount, int resourceLimit, int health){
+    //create an object of SingleObject
+    private static Player instance;
+
+    //make the constructor private so that this class cannot be instantiated
+    private Player(String id, Point position, List<PImage> images, int animationPeriod, int actionPeriod, int resourceCount, int resourceLimit, int health){
         super(id, position, images, animationPeriod,actionPeriod, health);
         this.resourceCount = resourceCount;
         this.resourceLimit = resourceLimit;
     }
+
+    //Get the only object available
+    public static Player getInstance(ImageStore imageStore){
+        //so only caveat is i don't think you're supposed to pass in anything in getInstance() oops, idk man
+        if (instance == null)
+        {
+            Point pt = new Point(0, 0);
+            // if instance is null, initialize
+            instance = new Player(Functions.DUDE_KEY,
+                    pt, imageStore.getImageList(imageStore, Functions.DUDE_KEY), Functions.PLAYER_ANIMATION_PERIOD,
+                    Functions.DUDE_ACTION_PERIOD, 0,
+                    Functions.DUDE_LIMIT, 0);
+        }
+        return instance;}
 
     public Point nextPositionPlayer(
             Entity d, WorldModel world, Point destPos) {
@@ -84,8 +102,6 @@ public class Player extends Transformable{
                     x++;
                     this.setResourceCount(x);
                 }
-                System.out.println("Player SNOW count: " + this.getResourceCount() + " out of " + this.getResourceLimit());
-
             }
         }
     }

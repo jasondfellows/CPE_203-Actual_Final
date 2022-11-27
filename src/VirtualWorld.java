@@ -107,40 +107,23 @@ public static String LOAD_FILE_NAME = "world.sav";
 
 //        System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
 
-//        Optional<Entity> entityOptional = world.getOccupant(world, pressed);
-//        if (entityOptional.isPresent())
-//        {
-//            Entity entity = entityOptional.get();
-//            System.out.println(entity.getId() + ": " + entity.toString() + " : " + entity.getHealth());
-//        }
-
         if(onYeti(pressed) == true && onYeti(player.getPosition()) == true)
             {
-                if (player.getResourceCount() < player.getResourceLimit())
-                {
-                    System.out.println("You need " + (player.getResourceLimit()-player.getResourceCount()) + " more snow to activate." );
-                }
-
                 if (player.getResourceCount() == player.getResourceLimit())
                 {
-                    //System.out.println("Player is on Yeti AND Yeti has been clicked AND Player has enough snow");
                     //um set to above resourceLimit so this if statement will never be entered again. Otherwise it might be even after Yeti is removed.
                     player.setResourceCount(player.getResourceLimit() * 10);
                     world.removeYeti(world, imageStore);
                     change_step = true;
                     player.setImages(imageStore.getImageList(imageStore, "santa"));
-
-//                    System.out.println("[Also, Player has 10 SNOW! code to get rid of Yeti and bring in lights]");
                     world.worldEvent(world, scheduler, imageStore, new Point(12, 8));
+
                     WorldModel.parseDude(new String[]{"dude"}, world, imageStore, new Point(10, 5), scheduler);
                     WorldModel.parseDude(new String[]{"dude"}, world, imageStore, new Point(14, 5), scheduler);
                     WorldModel.parseDude(new String[]{"dude"}, world, imageStore, new Point(10, 11), scheduler);
                     WorldModel.parseDude(new String[]{"dude"}, world, imageStore, new Point(14, 11), scheduler);
                 }
-
-
             }
-
     }
     public boolean onYeti(Point p)
     {
