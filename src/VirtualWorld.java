@@ -86,6 +86,8 @@ public static String LOAD_FILE_NAME = "world.sav";
         }
         WorldView.drawViewport(view);
         if (!moved){
+            fill(255);
+            rect(0, 0, 800, 180);
             fill(0);
             textSize(24);
             text("Collect 10 snow, stand inside the yeti and click on him to win", 40, 50);
