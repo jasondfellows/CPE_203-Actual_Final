@@ -96,7 +96,7 @@ public static String LOAD_FILE_NAME = "world.sav";
         }
         if (!change_step) {
             textSize(30);
-            text("You have " + player.getResourceCount() + " snow", 530, 570);
+            text("You have " + player.getResourceCount() + "/10 snow", 470, 570);
         }
     }
 

@@ -19,7 +19,12 @@
           - lights are then "turned on" and a fun message is displayed
 
 5. (if applicable) the names of each partner and what each partner was responsible for:
-    Sophie: A*; yeti; reindeer; santa; conditions to trigger world event & some of that; this.
+    Sophie: A*; yeti; reindeer; santa; conditions to trigger world event & some of that; singleton; this.
     Jason: A*; background; igloo; ice-dude; snowmen; trees; lights; happy holidays; display text; made the program work gracefully.
+
+6. Factory Design Pattern:
+    - implement singleton design pattern for "player" entity
+    - this is beneficial as it ensures there is only one "player" in the game at an instance
+    - thus, a rogue coder could not hack the game and create multiple "players" in order to fetch snow/win quicker
 
 Reflection: solid experience.

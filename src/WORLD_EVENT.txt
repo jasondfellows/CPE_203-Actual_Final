@@ -3,12 +3,13 @@
 2. what should happen when the event is triggered:
     a) the yeti disappears and turns into a pile of lights (it's been defeated, if you will)
     b) the player should turn into a santa-y/holiday character and now moves by two squares (instead of by one)
-    c) scene changes - trees systematically become lit with lights
-    d) after all trees have lights, the lights are "turned on" and a fun message is displayed
+    c) background tiles change - tiles around the center of the screen will change to different background tiles that each contain a string of lights
+    d) scene changes - trees systematically become lit with lights
+    e) after all trees have lights, the lights are "turned on" and a fun message is displayed
 
 3. what the affected entities should do:
-    a) the snowmen located >4 away from where event was triggered (euclidean distance) will stop chasing you (and freeze)
-    b) the snowmen located <=4 away turn into elves
+    a) the snowmen located >4 away from where event was triggered (euclidean distance) will stop chasing you (and freeze) and turn into happy snowmen
+    b) the snowmen located <=4 away turn into elves and help put up the christmas lights using A star pathing
 
 4. what the new entity is and how it should behave:
     a) four reindeer entities appear
@@ -20,7 +21,7 @@
 
 5. (if applicable) the names of each partner and what each partner was responsible for:
     Sophie: A*; yeti; reindeer; santa; conditions to trigger world event & some of that; singleton; this.
-    Jason: A*; background; igloo; ice-dude; snowmen; trees; lights; happy holidays; display text; made the program work gracefully.
+    Jason: background; igloo; ice-dude; snowmen; trees; lights; happy holidays; display text; made the program work gracefully.
 
 6. Factory Design Pattern:
     - implement singleton design pattern for "player" entity
