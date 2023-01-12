@@ -1,6 +1,6 @@
 # CPE_203-Actual_Final
 
-This is a final project for 203. It was a quarter long project with five parts.
+This is a final project for 203. It was a quarter long project with five parts. The final part was done in pairs.
 
 1) Refactor. Move all static methods into classes that they fit better in.
 2) Create interfaces for logical groupings of similar or identical code.
